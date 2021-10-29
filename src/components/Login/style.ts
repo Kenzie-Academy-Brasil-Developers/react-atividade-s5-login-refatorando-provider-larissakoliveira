@@ -16,22 +16,19 @@ export const Button = styled.button`
     content: '';
     background: linear-gradient(320deg, purple, pink, red, yellow, green, black, cyan, violet);
     position: absolute;
-    top: -2px;
-    left:-2px;
+    top: 0;
+    left: 0;
     border-radius: 100%;
     background-size: 600px;
     z-index: -1;
     width: 100%;
     height: 100%;
+    opacity: 1;
+    border-radius: 100%;
     animation: rainbowButton 35s linear infinite;
 }
 
-&:hover:before {
-    opacity: 1;
-    border-radius: 100%;
-}
-
 @keyframes rainbowButton {
-    15% { background-position: 400% 0; }
+    15% { background-position: 300%; }
 }
  `;
