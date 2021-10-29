@@ -1,23 +1,18 @@
-import { TextField } from "material-ui";
+//import { TextField } from "material-ui";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useAuth } from "../../Providers/Auth";
-import { InputHTMLAttributes } from "react";
-import { Container } from "@material-ui/core";
-import { ButtonContainer } from "./style";
+// import { InputHTMLAttributes } from "react";
+import { Container, TextField } from "@material-ui/core";
+ //import { ButtonContainer } from "./style";
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
-  type?: string;
-  placeholder: string;
-};
+
 
 interface usrData {
   password: string;
   email: string;
 }
-
 
 const Login = () => {
 
@@ -35,7 +30,9 @@ const Login = () => {
       register,
       handleSubmit,
       formState: { errors },
-    } = useForm({ resolver: yupResolver(schema) });
+    } = useForm({
+      resolver: yupResolver(schema),
+    });
 
 
     const handleForm = (userData: usrData) => {
@@ -47,22 +44,36 @@ const Login = () => {
         <h1 className="title">Login + refatorando provider</h1>
           <h1 className="titleLogin">Faça seu login</h1>
           <form onSubmit={handleSubmit(handleForm)}>
-            <div>
-              <input 
-                placeholder='email'
-                type='email'
-              />
+             <div>
+           <TextField
+              label="Email"
+              margin="normal"
+              variant="standard"
+              size="small"
+              color="primary"
+              {...register("email")}
+              error={!!errors.email}
+              helperText={errors.email?.message}
+              placeholder="Email"     
+            />
             </div>
             <div>
-              <input
-                placeholder='Senha'
-                type='password'
-              />
-            </div>
+            <TextField
+              label="Senha"
+              margin="normal"
+              variant="standard"
+              size="small"
+              color="primary"
+              {...register("password")}
+              error={!!errors.password}
+              helperText={errors.password?.message}
+              placeholder="Senha" 
+            />
+            </div> 
             <div>
-              <ButtonContainer>
+              <button type='submit'>
                 Entrar
-              </ButtonContainer>
+              </button>
             </div>
           </form>
       </Container>
