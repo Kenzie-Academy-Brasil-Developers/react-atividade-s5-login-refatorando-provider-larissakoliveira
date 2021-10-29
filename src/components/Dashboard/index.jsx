@@ -1,14 +1,12 @@
 import { useAuth } from "../../Providers/Auth";
-import { ButtonContainer } from "./style";
+import { Button } from "../Login/style";
 
 const Dashboard = () => {
 
     const { logout } = useAuth();
 
     return(
-        <ButtonContainer>
-        <button onClick={logout}>Sair</button>
-        </ButtonContainer>
+        <Button onClick={logout}>Sair</Button>
     )
 }
 

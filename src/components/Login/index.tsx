@@ -5,7 +5,7 @@ import * as yup from "yup";
 import { useAuth } from "../../Providers/Auth";
 // import { InputHTMLAttributes } from "react";
 import { Container, TextField } from "@material-ui/core";
- //import { ButtonContainer } from "./style";
+ import { Button } from "./style";
 
 
 
@@ -50,6 +50,7 @@ const Login = () => {
               margin="normal"
               variant="standard"
               size="small"
+              type='email'
               color="primary"
               {...register("email")}
               error={!!errors.email}
@@ -62,6 +63,7 @@ const Login = () => {
               label="Senha"
               margin="normal"
               variant="standard"
+              type='password'
               size="small"
               color="primary"
               {...register("password")}
@@ -71,9 +73,9 @@ const Login = () => {
             />
             </div> 
             <div>
-              <button type='submit'>
+              <Button type='submit'>
                 Entrar
-              </button>
+              </Button>
             </div>
           </form>
       </Container>
