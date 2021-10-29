@@ -1,45 +1,53 @@
 
-import { createContext, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
-const AuthContext = createContext({});
+interface AuthProps {
+  children: ReactNode;
+}
 
-export const AuthProvider = ({ children }) => {
+interface AuthProviderData {
+  login: (userData:usrData) => void;
+  logout: () => void;
+  authToken: string;
+}
+
+interface usrData {
+  email: string;
+  password: string;
+}
+
+const AuthContext = createContext<AuthProviderData>({} as AuthProviderData);
+
+export const AuthProvider = ({ children }: AuthProps) => {
+
   const history = useHistory();
   
-  // Dessa forma adicionamos ao state o token caso ele exista no localStorage
   const [authToken, setAuthToken] = useState(
     () => localStorage.getItem("token") || ""
   );
 
-  // Função para logar na aplicação, recebe os dados pegos do form de login
-  const signIn = (userData) => {
+  const login = (userData:usrData) => {
     axios
       .post("https://kenziehub.herokuapp.com/sessions", userData)
       .then((response) => {
-        // setamos no localStorage o token, caso tenhamos a resposta esperada
         localStorage.setItem("token", response.data.token);
-        // setamos no state o token, caso tenhamos a resposta esperada
         setAuthToken(response.data.token);
-        // redirecionamos para a página logado
         history.push("/dashboard");
+        console.log('entrou ')
       })
       .catch((err) => console.log(err));
   };
 
-  // Função para deslogar da aplicação
-  const Logout = () => {
-    // limpando o localStorage
+  const logout = () => {
     localStorage.clear();
-    // limpando o state
     setAuthToken("");
-    // redirecionando para login
-    history.push("/login");
+    history.push("/");
   };
 
   return (
-    <AuthContext.Provider value={{ authToken, Logout, signIn }}>
+    <AuthContext.Provider value={{ authToken, logout, login }}>
       {children}
     </AuthContext.Provider>
   );
